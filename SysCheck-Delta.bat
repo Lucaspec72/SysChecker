@@ -100,15 +100,16 @@ echo []Partitions[] >>SysCheckdelta.log
     )
   )
 ) > tmp.vbs
-cscript //nologo tmp.vbs >SysCheckdelta_storage.log
-(for /f "tokens=* delims=ÿ" %%f in (
-  SysCheckdelta_storage.log
-  ) do (
-      echo %%f
-  )
-) >>SysCheckdelta.log
+set "tmp.vbs"="tmp.vbs:ÿ= "
+cscript //nologo tmp.vbs >>SysCheckdelta.log
+::(for /f "tokens=* delims=ÿ" %%f in (
+::  SysCheckdelta_storage.log
+::  ) do (
+::      echo %%f
+::  )
+::) >>SysCheckdelta.log
 del tmp.vbs
-del SysCheckdelta_storage.log
+::del SysCheckdelta_storage.log
 echo.>>SysCheckdelta.log
 wmic logicaldisk get Name, Compressed, Description, DriveType, FileSystem, SupportsDiskQuotas, VolumeDirty, VolumeName | more >>SysCheckdelta.log
 echo Scan De : os
