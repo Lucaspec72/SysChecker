@@ -1,4 +1,6 @@
 CHCP 1252
+
+@+
 ::[ENGLISH]
 ::SysCheck-Delta By Lucas "Lucaspec72" Pecquenard
 ::This customized version of SysCheck was made for employees of "Delta Technologies", and based of SysCheck v1.4
