@@ -1,2 +1,2 @@
-# SysChecker-Delta
-Une version de SysChecker crée pour l'entreprise Delta Technologie, basée sur SysChecker 1.4
+# SysChecker
+Un Programme batch qui scanne vôtre PC pour obtenir des infos sur le dit PC !
