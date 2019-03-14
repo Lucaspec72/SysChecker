@@ -14,7 +14,8 @@
 ::des commandes supplémentaires sont nécéssaires, elles sonts chargées avec un délai
 setlocal enabledelayedexpansion
 ::cette commande change la méthode d'encryption de sortie
-CHCP 1252
+chcp 65001 >null
+del null
 ::cette commande définit le nom de la fenêtre
 title SysCheck-Delta
 ::cette commande définit la taille de la fenetre
@@ -27,13 +28,13 @@ echo []BIOS[] >SysCheckdelta.log
 ::les commandes wmic récupèrent diverses informations sur la configuration de l'ordinateur (Le scan est local, aucun fichier ne passe par internet)
 wmic bios get serialnumber /format:List | more >>SysCheckdelta.log
 echo Scan De : computersystem
-echo []Modele De L'Ordinateur[] >>SysCheckdelta.log
+echo []Modèle De L'Ordinateur[] >>SysCheckdelta.log
 wmic computersystem get Model /format:List | more >>SysCheckdelta.log
 echo Scan De : cpu
 echo []Processeur[] >>SysCheckdelta.log
 wmic cpu get Name, Caption /format:List | more >>SysCheckdelta.log
 echo Scan De : memorychip
-echo []Memoire Vive[] >>SysCheckdelta.log
+echo []Mémoire Vive[] >>SysCheckdelta.log
 ::les sous-programmes si-dessous sonts interresants, car ils récupèrent l'information "totalphysicalmemory" de la section computersystem de wmic pour ensuite la convertir pour obtenir le nombre de Gigaoctets de mémoire vive
 ::celui ci récupère la valeur de "totalphysicalmemory" et donne cette valeur à la variable "ram"
 for /f "tokens=2 delims==" %%f in ('wmic computersystem get totalphysicalmemory /value ^| find "="') do set ram=%%f
@@ -83,37 +84,35 @@ echo !reverse!>temp.tmp
 ::ici un programme sépare la valeur dans "temp.tmp" pour calculer la valeur en gigaoctets (ou gigabytes selon votre préférence) de la mémoire vive de l'ordinateur
 for /f "tokens=1 delims=+" %%f in (temp.tmp) do set "myVar=%%f"
 ::cette commande supprime le fichier "temp.tmp" car il n'est plus nécéssaire
-del temp.tmp
 ::cette commande sort (ENFIN) la valeur en Go/Gb de la mémoire vive
-echo Valeur De La Memoire Vive = %myVar%Gb (%ram% Bytes)>>SysCheckdelta.log
+echo Valeur De La Mémoire Vive = %myVar%Gb (%ram% Bytes)>>SysCheckdelta.log
 echo Scan De : diskdrive
 echo []Peripheriques De Stockage[] >>SysCheckdelta.log
 wmic diskdrive get Name, Manufacturer, Model, InterfaceType, MediaLoaded, MediaType | more >>SysCheckdelta.log
 echo Scan De : logicaldisk
 echo []Partitions[] >>SysCheckdelta.log
 ::ce sous-programme récupère les données relative aux partitions de stockages des péripheriques tel que clés usb, disques durs physiques HDD et disques à état solide SSD ou possiblement dans certains cas même des disques optiques tel que des CD roms ou DvD
+set vartest=NaN
+set _result=NaN 2
 (for /f "tokens=1-3" %%a in ('
   WMIC LOGICALDISK GET FreeSpace^,Name^,Size ^|FINDSTR /I /V "Name"
   ') do (
+    echo wsh.echo "%%b" ^& " free=" ^& FormatNumber^(cdbl^(%%a^)/1024/1024/1024, 2^)^& " GB"^& " size=" ^& FormatNumber^(cdbl^(%%c^)/1024/1024/1024, 2^)^& " GB" > tmp.vbs
     if not "%%c"=="" (
-      echo wsh.echo vbNewLine ^& "%%b" ^& " free=" ^& FormatNumber^(cdbl^(%%a^)/1024/1024/1024, 2^)^& " GB"^& " size=" ^& FormatNumber^(cdbl^(%%c^)/1024/1024/1024, 2^)^& " GB"
+      echo( 
+      cscript //nologo tmp.vbs >>temp.tmp
+      for /f "delims=" %%x in (temp.tmp) do set varnoy=%%x
+      SET theperfectvar=!varnoy:�=!
+      echo !theperfectvar!>>SysCheckdelta.log
     )
   )
-) > tmp.vbs
-set "tmp.vbs"="tmp.vbs:ÿ= "
-cscript //nologo tmp.vbs >>SysCheckdelta.log
-::(for /f "tokens=* delims=ÿ" %%f in (
-::  SysCheckdelta_storage.log
-::  ) do (
-::      echo %%f
-::  )
-::) >>SysCheckdelta.log
+)
+del temp.tmp
 del tmp.vbs
-::del SysCheckdelta_storage.log
 echo.>>SysCheckdelta.log
-wmic logicaldisk get Name, Compressed, Description, DriveType, FileSystem, SupportsDiskQuotas, VolumeDirty, VolumeName | more >>SysCheckdelta.log
+wmic logicaldisk get Name, Compressed, DriveType, FileSystem, SupportsDiskQuotas, VolumeDirty, VolumeName | more >>SysCheckdelta.log
 echo Scan De : os
-echo []Systeme D'Exploitation[] >>SysCheckdelta.log
+echo []Système D'Exploitation[] >>SysCheckdelta.log
 wmic os get Version, Caption /format:list | more >>SysCheckdelta.log
 ::cette commande récupère tout les fichiers de "SysCheckdelta.log" et les met dans le fichier texte(txt) "SysCheck-Delta_Log.txt" en enlevant la plupart des espaces vide prenant de la place pour rien, cette étape peut paraitre inutile ou avoir peut d'utilitée pratique, mais détrompez vous car cette petite commande libère au moins une trentaine de lignes !
 findstr /v /r /c:"^$" /c:"^[\ \	]*$"  "SysCheckdelta.log" > "SysCheck-Delta_Log.txt"
@@ -152,7 +151,7 @@ echo MsgBox "Si une boite avec du texte apparait, appuyez sur 'I Concent' puis s
 cscript msgbox.vbs
 del msgbox.vbs
 ) | pause
-echo MsgBox "Quand le test est fini, transmettre les resultats a un employe de Delta Technologies",vbInformation+vbSystemModal,"SysCheck-Delta"> msgbox.vbs
+echo MsgBox "Quand le test est fini, transmettre les résultats a un employé de Delta Technologies",vbInformation+vbSystemModal,"SysCheck-Delta"> msgbox.vbs
 cscript msgbox.vbs
 del msgbox.vbs
 start SysCheck-Delta_Log.txt
