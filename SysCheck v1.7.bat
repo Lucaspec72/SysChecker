@@ -1,4 +1,4 @@
-::SysCheck v1.7 By Lucas "Lucaspec72" Pecquenard
+::SysCheck v1.8 By Lucas "Lucaspec72" Pecquenard
 @echo off
 mode con: cols=35 lines=10
 setlocal enabledelayedexpansion
@@ -28,20 +28,15 @@ for /l %%i in (0,1,%len%) do (
 )
 SET Text=!reverse!
 SET Return=
-REM Batch files don't have a LEN function.
-REM So this loop will process up to 100 chars by doing a substring on each.
 FOR /L %%I IN (0,3,100) DO (
     CALL SET Letter=!Text:~%%I,3!
-    REM Only process when 3 letters cycled.
     IF NOT "!Letter!" == "" (
         SET Return=!Return!+!Letter!
     ) ELSE (
-        REM Otherwise, we have reached the end.
         goto loopdone
     )
 )
 :loopdone
-REM Remove leading char.
 SET Return=%Return:~1,999%
 set "advanced=%Return%"
 echo %advanced%>temp.tmp
@@ -108,11 +103,16 @@ echo [ZZZZZZZZZZZZZZZZZZZZZZZZ]>>SysCheck.log
 echo [ZZZ]OPERATING SYSTEM[ZZZ]>>SysCheck.log
 echo [ZZZZZZZZZZZZZZZZZZZZZZZZ]>>SysCheck.log
 wmic /APPEND:SysCheck.log os get Version, Caption, CountryCode, CSName, Description, InstallDate, SerialNumber, ServicePackMajorVersion, WindowsDirectory, CurrentTimeZone, FreePhysicalMemory, FreeVirtualMemory, LastBootUpTime, NumberofProcesses, NumberofUsers, Organization, RegisteredUser, Status /format:list >hiddenlog
+echo checking VideoController(GPU)
+echo [ZZZZZZZZZZZ]>>SysCheck.log
+echo [ZZZ]GPU[ZZZ]>>SysCheck.log
+echo [ZZZZZZZZZZZ]>>SysCheck.log
+wmic /APPEND:SysCheck.log path win32_VideoController get Name, DeviceID, DriverVersion, Status, AdapterRAM >hiddenlog
 findstr /v /r /c:"^$" /c:"^[\ \	]*$" "SysCheck.log" > "SysCheck_Log.txt"
 del SysCheck.log
 del hiddenlog
 del tmp.vbs
-echo Thank you for using SysCheck v1.7
+echo Thank you for using SysCheck v1.8
 timeout /t 1 /nobreak>null
 del null
 start SysCheck_Log.txt
