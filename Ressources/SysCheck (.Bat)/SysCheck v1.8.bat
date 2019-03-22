@@ -1,3 +1,36 @@
+::[Bat To Exe Converter]
+::
+::YAwzoRdxOk+EWAjk
+::fBw5plQjdCyDJGyX8VAjFDdBTwWRAE+1BaAR7ebv/Nagq1kVQeADS5bI+byLI+sW+HnXbIUO3n9Zk4saXVVAPjuoYQF6oG1N1g==
+::YAwzuBVtJxjWCl3EqQJgSA==
+::ZR4luwNxJguZRRnk
+::Yhs/ulQjdF+5
+::cxAkpRVqdFKZSjk=
+::cBs/ulQjdF+5
+::ZR41oxFsdFKZSDk=
+::eBoioBt6dFKZSDk=
+::cRo6pxp7LAbNWATEpCI=
+::egkzugNsPRvcWATEpSI=
+::dAsiuh18IRvcCxnZtBJQ
+::cRYluBh/LU+EWAnk
+::YxY4rhs+aU+IeA==
+::cxY6rQJ7JhzQF1fEqQJhZkM0
+::ZQ05rAF9IBncCkqN+0xwdVsFAlzi
+::ZQ05rAF9IAHYFVzEqQIDMQh3RAGBNyvrSO18
+::eg0/rx1wNQPfEVWB+kM9LVsJDDebL0iyA7YXiA==
+::fBEirQZwNQPfEVWB+kM9LVsJDDebL0iyA7YX/rmjjw==
+::cRolqwZ3JBvQF1fEqQIDMQh3RAGBNyvrSO18
+::dhA7uBVwLU+EWHWR90MjOB5XG1bi
+::YQ03rBFzNR3SWATElA==
+::dhAmsQZ3MwfNWATE2WsESA==
+::ZQ0/vhVqMQ3MEVWAtB9wSA==
+::Zg8zqx1/OA3MEVWAtB9wSA==
+::dhA7pRFwIByZRRm37VETIB5XR0TTcjP6JKxcxP347vmXp05KBoI=
+::Zh4grVQjdCyDJGyX8VAjFDdBTwWRAE+1BaAR7ebv/Nagq1kVQeADS5bI+byLI+sW+HnXbIUO3n9Zk4saXVUAMBeza28=
+::YB416Ek+ZG8=
+::
+::
+::978f952a14a936cc963da21a135fa983
 ::SysCheck v1.8 By Lucas "Lucaspec72" Pecquenard
 @echo off
 mode con: cols=35 lines=10
