@@ -138,6 +138,8 @@ echo [ZZZZZZZZZZZZZZZZZZZZZZZZ]>>SysCheck.log
 echo [ZZZ]OPERATING SYSTEM[ZZZ]>>SysCheck.log
 echo [ZZZZZZZZZZZZZZZZZZZZZZZZ]>>SysCheck.log
 wmic /APPEND:SysCheck.log os get Version, Caption, CountryCode, CSName, Description, InstallDate, SerialNumber, ServicePackMajorVersion, WindowsDirectory, CurrentTimeZone, FreePhysicalMemory, FreeVirtualMemory, LastBootUpTime, NumberofProcesses, NumberofUsers, Organization, RegisteredUser, Status /format:list >hiddenlog
+:: FOLLOWING COMMAND ONLY WORKS ON WINDOWS 10 USING AT LEAST DECEMBER 2018 UPDATE
+wmic /APPEND:SysCheck.log path softwarelicensingservice get OA3xOriginalProductKey /format:list >hiddenlog
 echo checking VideoController(GPU)
 echo [ZZZZZZZZZZZ]>>SysCheck.log
 echo [ZZZ]GPU[ZZZ]>>SysCheck.log
